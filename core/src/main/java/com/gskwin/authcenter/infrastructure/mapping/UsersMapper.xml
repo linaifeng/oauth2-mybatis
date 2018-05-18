@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gskwin.authcenter.infrastructure.dao.UsersMapper" >
+  <resultMap id="BaseResultMap" type="com.gskwin.authcenter.domain.oauth.User" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="archived" property="archived" jdbcType="BIT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, users.create_time, archived, version, users.username, last_login_time
+  </sql>
+  <sql id="Password_Column_List" >
+    password
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from users
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gskwin.authcenter.domain.oauth.User" >
+    insert into users (id, create_time, 
+      archived, version, password, 
+      username, default_user, last_login_time)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{archived,jdbcType=BIT}, #{version,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{defaultUser,jdbcType=BIT}, #{lastLoginTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gskwin.authcenter.domain.oauth.User" >
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="archived != null" >
+        archived,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="defaultUser != null" >
+        default_user,
+      </if>
+      <if test="lastLoginTime != null" >
+        last_login_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="archived != null" >
+        #{archived,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultUser != null" >
+        #{defaultUser,jdbcType=BIT},
+      </if>
+      <if test="lastLoginTime != null" >
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gskwin.authcenter.domain.oauth.User" >
+    update users
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="archived != null" >
+        archived = #{archived,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultUser != null" >
+        default_user = #{defaultUser,jdbcType=BIT},
+      </if>
+      <if test="lastLoginTime != null" >
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gskwin.authcenter.domain.oauth.User" >
+    update users
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      archived = #{archived,jdbcType=BIT},
+      version = #{version,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      default_user = #{defaultUser,jdbcType=BIT},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getUserInfoByTokenId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from users, oauth_access_token as oat
+    where oat.token_id = #{tokenId,jdbcType=VARCHAR}
+    and users.username = oat.username
+  </select>
+  
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="editPassword" parameterType="java.util.HashMap" >
+    update users
+    set password = #{password,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="editUsername" parameterType="java.util.HashMap" >
+    update users
+    set username = #{username,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectPasswordByPrimaryKey" resultType="java.lang.String" parameterType="java.lang.String" >
+    select 
+    <include refid="Password_Column_List" />
+    from users
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getUsersForRole" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    FROM users
+	JOIN user_roles ON users.id = user_roles.user_id
+	JOIN roles ON user_roles.role_id = roles.id
+	WHERE roles.role_name = #{roleName,jdbcType=VARCHAR}
+  </select>
+</mapper>

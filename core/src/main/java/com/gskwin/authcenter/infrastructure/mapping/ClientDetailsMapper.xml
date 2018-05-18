@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gskwin.authcenter.infrastructure.dao.ClientDetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.gskwin.authcenter.domain.oauth.ClientDetails" >
+    <id column="client_id" property="clientId" jdbcType="VARCHAR" />
+    <result column="client_secret" property="clientSecret" jdbcType="VARCHAR" />
+    <result column="client_name" property="clientName" jdbcType="VARCHAR" />
+    <result column="client_uri" property="clientUri" jdbcType="VARCHAR" />
+    <result column="client_icon_uri" property="clientIconUri" jdbcType="VARCHAR" />
+    <result column="resource_ids" property="resourceIds" jdbcType="VARCHAR" />
+    <result column="scope" property="scope" jdbcType="VARCHAR" />
+    <result column="grant_types" property="grantTypes" jdbcType="VARCHAR" />
+    <result column="redirect_uri" property="redirectUri" jdbcType="VARCHAR" />
+    <result column="roles" property="roles" jdbcType="VARCHAR" />
+    <result column="access_token_validity" property="accessTokenValidity" jdbcType="INTEGER" />
+    <result column="refresh_token_validity" property="refreshTokenValidity" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="archived" property="archived" jdbcType="BIT" />
+    <result column="trusted" property="trusted" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    client_id, client_secret, client_name, client_uri, client_icon_uri, resource_ids, 
+    scope, grant_types, redirect_uri, roles, access_token_validity, refresh_token_validity, 
+    description, create_time, archived, trusted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oauth_client_details
+    where client_id = #{clientId,jdbcType=VARCHAR}
+  </select>
+  <select id="findClientDetails" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oauth_client_details
+    where archived = 0 and client_id = #{clientId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oauth_client_details
+    where client_id = #{clientId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gskwin.authcenter.domain.oauth.ClientDetails" >
+    insert into oauth_client_details (client_id, client_secret, client_name, 
+      client_uri, client_icon_uri, resource_ids, 
+      scope, grant_types, redirect_uri, 
+      roles, access_token_validity, refresh_token_validity, 
+      description, create_time, archived, 
+      trusted)
+    values (#{clientId,jdbcType=VARCHAR}, #{clientSecret,jdbcType=VARCHAR}, #{clientName,jdbcType=VARCHAR}, 
+      #{clientUri,jdbcType=VARCHAR}, #{clientIconUri,jdbcType=VARCHAR}, #{resourceIds,jdbcType=VARCHAR}, 
+      #{scope,jdbcType=VARCHAR}, #{grantTypes,jdbcType=VARCHAR}, #{redirectUri,jdbcType=VARCHAR}, 
+      #{roles,jdbcType=VARCHAR}, #{accessTokenValidity,jdbcType=INTEGER}, #{refreshTokenValidity,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{archived,jdbcType=BIT}, 
+      #{trusted,jdbcType=BIT})
+  </insert>
+  <insert id="saveClientDetails" parameterType="com.gskwin.authcenter.domain.oauth.ClientDetails" >
+    insert into oauth_client_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="clientSecret != null" >
+        client_secret,
+      </if>
+      <if test="clientName != null" >
+        client_name,
+      </if>
+      <if test="clientUri != null" >
+        client_uri,
+      </if>
+      <if test="clientIconUri != null" >
+        client_icon_uri,
+      </if>
+      <if test="resourceIds != null" >
+        resource_ids,
+      </if>
+      <if test="scope != null" >
+        scope,
+      </if>
+      <if test="grantTypes != null" >
+        grant_types,
+      </if>
+      <if test="redirectUri != null" >
+        redirect_uri,
+      </if>
+      <if test="roles != null" >
+        roles,
+      </if>
+      <if test="accessTokenValidity != null" >
+        access_token_validity,
+      </if>
+      <if test="refreshTokenValidity != null" >
+        refresh_token_validity,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="archived != null" >
+        archived,
+      </if>
+      <if test="trusted != null" >
+        trusted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="clientId != null" >
+        #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="clientSecret != null" >
+        #{clientSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="clientName != null" >
+        #{clientName,jdbcType=VARCHAR},
+      </if>
+      <if test="clientUri != null" >
+        #{clientUri,jdbcType=VARCHAR},
+      </if>
+      <if test="clientIconUri != null" >
+        #{clientIconUri,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceIds != null" >
+        #{resourceIds,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null" >
+        #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="grantTypes != null" >
+        #{grantTypes,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUri != null" >
+        #{redirectUri,jdbcType=VARCHAR},
+      </if>
+      <if test="roles != null" >
+        #{roles,jdbcType=VARCHAR},
+      </if>
+      <if test="accessTokenValidity != null" >
+        #{accessTokenValidity,jdbcType=INTEGER},
+      </if>
+      <if test="refreshTokenValidity != null" >
+        #{refreshTokenValidity,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="archived != null" >
+        #{archived,jdbcType=BIT},
+      </if>
+      <if test="trusted != null" >
+        #{trusted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gskwin.authcenter.domain.oauth.ClientDetails" >
+    update oauth_client_details
+    <set >
+      <if test="clientSecret != null" >
+        client_secret = #{clientSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="clientName != null" >
+        client_name = #{clientName,jdbcType=VARCHAR},
+      </if>
+      <if test="clientUri != null" >
+        client_uri = #{clientUri,jdbcType=VARCHAR},
+      </if>
+      <if test="clientIconUri != null" >
+        client_icon_uri = #{clientIconUri,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceIds != null" >
+        resource_ids = #{resourceIds,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null" >
+        scope = #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="grantTypes != null" >
+        grant_types = #{grantTypes,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUri != null" >
+        redirect_uri = #{redirectUri,jdbcType=VARCHAR},
+      </if>
+      <if test="roles != null" >
+        roles = #{roles,jdbcType=VARCHAR},
+      </if>
+      <if test="accessTokenValidity != null" >
+        access_token_validity = #{accessTokenValidity,jdbcType=INTEGER},
+      </if>
+      <if test="refreshTokenValidity != null" >
+        refresh_token_validity = #{refreshTokenValidity,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="archived != null" >
+        archived = #{archived,jdbcType=BIT},
+      </if>
+      <if test="trusted != null" >
+        trusted = #{trusted,jdbcType=BIT},
+      </if>
+    </set>
+    where client_id = #{clientId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gskwin.authcenter.domain.oauth.ClientDetails" >
+    update oauth_client_details
+    set client_secret = #{clientSecret,jdbcType=VARCHAR},
+      client_name = #{clientName,jdbcType=VARCHAR},
+      client_uri = #{clientUri,jdbcType=VARCHAR},
+      client_icon_uri = #{clientIconUri,jdbcType=VARCHAR},
+      resource_ids = #{resourceIds,jdbcType=VARCHAR},
+      scope = #{scope,jdbcType=VARCHAR},
+      grant_types = #{grantTypes,jdbcType=VARCHAR},
+      redirect_uri = #{redirectUri,jdbcType=VARCHAR},
+      roles = #{roles,jdbcType=VARCHAR},
+      access_token_validity = #{accessTokenValidity,jdbcType=INTEGER},
+      refresh_token_validity = #{refreshTokenValidity,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      archived = #{archived,jdbcType=BIT},
+      trusted = #{trusted,jdbcType=BIT}
+    where client_id = #{clientId,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

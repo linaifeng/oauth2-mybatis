@@ -1,0 +1,174 @@
+@charset "utf-8";
+* {
+	margin: 0px;
+	padding: 0px;
+}
+*::after, *::before {
+	box-sizing: border-box;
+}
+body {
+	font-family: "微软雅黑", "Microsoft Yahei", "simsun";
+}
+input, textarea, select {
+	outline-style: none;
+	resize: none;
+}
+.clear {
+	font-size: 0px;
+	clear: both;
+	line-height: 0px;
+	height: 1px;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix:after {
+	content-news: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	min-height: 1px;
+}
+* html .clearfix {
+	height: 1px;
+}
+img {
+	border: none;
+	outline: none;
+}
+a:link {
+	TEXT-DECORATION: none;
+	outline: none;
+}
+a:visited {
+	TEXT-DECORATION: none;
+	outline: none;
+}
+a:hover {
+	TEXT-DECORATION: none !important;
+	outline: none;
+}
+a:active {
+	TEXT-DECORATION: none;
+	outline: none;
+}
+ol, ul {
+	list-style-type: none;
+}
+em, i {
+	font-style: normal;
+}
+/*header开始*/
+.header {
+	background: url('../images/head.jpg') repeat center;
+	height: 220px;
+	position: relative;
+}
+.logo {
+	width: 275px;
+	height: 99px;
+	position: absolute;
+	top: 60px;
+	left: 300px;
+}
+/*header结束*/
+.indent1 {
+	background: url('../images/banner.jpg') center;
+	height: 456px;
+	padding-top: 102px;
+}
+.login {
+	background: url('../images/login_bg.png');
+	width: 289px;
+	height: 353px;
+	margin: 0 auto;
+	padding: 38px 34px 0 34px;
+}
+.login_title {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+.login_user {
+	margin-bottom: 19px;
+	background-color: #FFF;
+}
+.login-user-icon {
+	background-image: url('../images/login_icon_user.jpg');
+	height: 44px;
+	width: 44px;
+	float: left;
+	border-bottom: solid 1px #C7C7C7;
+	border-top: solid 1px #C7C7C7;
+	border-left: solid 1px #C7C7C7;
+}
+.login-pass-icon {
+	background-image: url('../images/login-icon-pass.jpg');
+	height: 44px;
+	width: 44px;
+	float: left;
+	border-bottom: solid 1px #C7C7C7;
+	border-top: solid 1px #C7C7C7;
+	border-left: solid 1px #C7C7C7;
+}
+.login-input {
+	height: 44px;
+	line-height: 44px;
+	font-size: 14px;
+	float: left;
+	border: solid 1px #C7C7C7;
+	font-family: inherit;
+	padding-left: 15px;
+	width: 227px;
+}
+.login-input:focus {
+	border-color: #2579D1;
+}
+.login-input-erma:focus {
+	border-color: #2579D1;
+}
+.login_user_erweima {
+	margin-bottom: 10px;
+}
+.login-input-erma {
+	height: 44px !important;
+	line-height: 44px;
+	font-size: 14px;
+	float: left;
+	font-family: inherit;
+	padding-left: 14px;
+	width: 130px;
+	border: solid 1px #C7C7C7;
+}
+.erweima {
+	float: right;
+	padding-top: 7px;
+}
+.login_btn {
+	width: 293px;
+	height: 50px;
+	background-color: #D60E19;
+	color: #FFF;
+	text-align: center;
+	font-weight: bold;
+	line-height: 50px;
+	font-size: 18px;
+	border: none;
+}
+.forgrt-pass{margin-bottom:15px;}
+/*footer开始*/
+.footer {
+	height: 200px;
+	background-color: #135BC1;
+	text-align: center;
+	line-height: 200px;
+	color: #FFF;
+}
+/*footer结束*/

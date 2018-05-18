@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gskwin.authcenter.infrastructure.dao.AccessTokenMapper" >
+  <resultMap id="BaseResultMap" type="com.gskwin.authcenter.domain.oauth.AccessToken" >
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="token_id" property="tokenId" jdbcType="VARCHAR" />
+    <result column="token_expired_seconds" property="tokenExpiredSeconds" jdbcType="INTEGER" />
+    <result column="authentication_id" property="authenticationId" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="client_id" property="clientId" jdbcType="VARCHAR" />
+    <result column="token_type" property="tokenType" jdbcType="VARCHAR" />
+    <result column="refresh_token_expired_seconds" property="refreshTokenExpiredSeconds" jdbcType="INTEGER" />
+    <result column="refresh_token" property="refreshToken" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    create_time, token_id, token_expired_seconds, authentication_id, username, client_id,
+    token_type, refresh_token_expired_seconds, refresh_token
+  </sql>
+  <insert id="saveAccessToken" parameterType="com.gskwin.authcenter.domain.oauth.AccessToken" >
+    insert into oauth_access_token
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="tokenId != null" >
+        token_id,
+      </if>
+      <if test="tokenExpiredSeconds != null" >
+        token_expired_seconds,
+      </if>
+      <if test="authenticationId != null" >
+        authentication_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="tokenType != null" >
+        token_type,
+      </if>
+      <if test="refreshTokenExpiredSeconds != null" >
+        refresh_token_expired_seconds,
+      </if>
+      <if test="refreshToken != null" >
+        refresh_token,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tokenId != null" >
+        #{tokenId,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenExpiredSeconds != null" >
+        #{tokenExpiredSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="authenticationId != null" >
+        #{authenticationId,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenType != null" >
+        #{tokenType,jdbcType=VARCHAR},
+      </if>
+      <if test="refreshTokenExpiredSeconds != null" >
+        #{refreshTokenExpiredSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="refreshToken != null" >
+        #{refreshToken,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="findAccessToken" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from oauth_access_token 
+  	where client_id = #{clientId,jdbcType=VARCHAR} 
+  	and username = #{username,jdbcType=VARCHAR} 
+  	and authentication_id = #{authenticationId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteAccessToken" parameterType="com.gskwin.authcenter.domain.oauth.AccessToken">
+  	delete from oauth_access_token where client_id = #{clientId,jdbcType=VARCHAR} and username = #{username,jdbcType=VARCHAR} and authentication_id = #{authenticationId,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="findAccessTokenByRefreshToken" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from oauth_access_token 
+  	where refresh_token = #{refreshToken,jdbcType=VARCHAR} and client_id = #{clientId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findAccessTokenByTokenId" resultMap="BaseResultMap">
+  	select 
+	<include refid="Base_Column_List" /> 
+	from oauth_access_token where token_id = #{tokenId,jdbcType=VARCHAR}
+  </select>
+</mapper>

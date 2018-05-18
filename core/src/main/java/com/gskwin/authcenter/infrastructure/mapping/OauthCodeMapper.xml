@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gskwin.authcenter.infrastructure.dao.OauthCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.gskwin.authcenter.domain.oauth.OauthCode" >
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="client_id" property="clientId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    create_time, code, username, client_id
+  </sql>
+  <insert id="insert" parameterType="com.gskwin.authcenter.domain.oauth.OauthCode" >
+    insert into oauth_code (create_time, code, username, 
+      client_id)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{code,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{clientId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="saveOauthCode" parameterType="com.gskwin.authcenter.domain.oauth.OauthCode" >
+    insert into oauth_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="findOauthCode" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from oauth_code 
+  	where code = #{code,jdbcType=VARCHAR} and client_id = #{clientId,jdbcType=VARCHAR} 
+  </select>
+  
+  <select id="findOauthCodeByUsernameClientId" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from oauth_code 
+  	where username = #{username,jdbcType=VARCHAR} and client_id = #{clientId,jdbcType=VARCHAR} 
+  </select>
+  
+  <delete id="deleteOauthCode" parameterType="com.gskwin.authcenter.domain.oauth.OauthCode">
+  	delete from oauth_code where code = #{code,jdbcType=VARCHAR} and client_id = #{clientId,jdbcType=VARCHAR} and username = #{username,jdbcType=VARCHAR}
+  </delete>
+</mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gskwin.authcenter.infrastructure.dao.PermissionsMapper" >
+  <resultMap id="BaseResultMap" type="com.gskwin.authcenter.domain.oauth.Permission" >
+    <id column="id" property="id" jdbcType="BINARY" />
+    <!-- <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="archived" property="archived" jdbcType="BIT" />
+    <result column="version" property="version" jdbcType="INTEGER" /> -->
+    <result column="permission_name" property="permissionName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, permission_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from permissions
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from permissions
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gskwin.authcenter.domain.oauth.Permission" >
+    insert into permissions (id, create_time, archived, 
+      version, permission_name)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{archived,jdbcType=BIT}, 
+      #{version,jdbcType=INTEGER}, #{permissionName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gskwin.authcenter.domain.oauth.Permission" >
+    insert into permissions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="archived != null" >
+        archived,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="permissionName != null" >
+        permission_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="archived != null" >
+        #{archived,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="permissionName != null" >
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gskwin.authcenter.domain.oauth.Permission" >
+    update permissions
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="archived != null" >
+        archived = #{archived,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="permissionName != null" >
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gskwin.authcenter.domain.oauth.Permission" >
+    update permissions
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      archived = #{archived,jdbcType=BIT},
+      version = #{version,jdbcType=INTEGER},
+      permission_name = #{permissionName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAllPermissions" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" /> 
+    from permissions
+  </select>
+
+  <select id="selectPermissionsByUsername" resultMap="BaseResultMap">
+    select distinct p.id AS id, p.permission_name 
+    from permissions AS p INNER JOIN 
+      (role_permissions AS rp INNER JOIN 
+        (user_roles AS ur INNER JOIN users AS u ON ur.user_id = u.id) 
+      ON rp.role_id = ur.role_id)
+    ON p.id = rp.permission_id 
+    WHERE u.username = #{username,jdbcType=VARCHAR} and u.archived = 0
+  </select>
+</mapper>

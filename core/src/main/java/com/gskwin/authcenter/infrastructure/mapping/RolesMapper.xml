@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gskwin.authcenter.infrastructure.dao.RolesMapper" >
+  <resultMap id="BaseResultMap" type="com.gskwin.authcenter.domain.oauth.Role" >
+    <id column="id" property="id" jdbcType="BINARY" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="archived" property="archived" jdbcType="BIT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, create_time, archived, version, role_name
+  </sql>
+  <sql id="Simple_Column_List" >
+    roles.id AS id, role_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from roles
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from roles
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gskwin.authcenter.domain.oauth.Role" >
+    insert into roles (id, create_time, archived, 
+      version, role_name)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{archived,jdbcType=BIT}, 
+      #{version,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gskwin.authcenter.domain.oauth.Role" >
+    insert into roles
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="archived != null" >
+        archived,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="archived != null" >
+        #{archived,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gskwin.authcenter.domain.oauth.Role" >
+    update roles
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="archived != null" >
+        archived = #{archived,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = UNHEX(#{id,jdbcType=BINARY})
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gskwin.authcenter.domain.oauth.Role" >
+    update roles
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      archived = #{archived,jdbcType=BIT},
+      version = #{version,jdbcType=INTEGER},
+      role_name = #{roleName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAllRoles" resultMap="BaseResultMap" >
+    select 
+    <include refid="Simple_Column_List" />
+    from roles
+  </select>
+  
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from roles
+    where role_name = #{roleName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectRolesByUserId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Simple_Column_List" />
+    from roles join user_roles
+    on roles.id = user_roles.role_id
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+</mapper>
