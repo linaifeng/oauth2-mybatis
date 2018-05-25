@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header :: head">
+	<title>oauth2 client</title>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+	<header class="main-header">
+		<!-- Logo -->
+		<a href="#" class="logo">
+			<span class="logo-lg"><b>oauth2 client</b></span>
+		</a>
+		<!-- Header Navbar: style can be found in header.less -->
+		<nav class="navbar navbar-static-top">
+			<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+				<span class="sr-only">Toggle navigation</span>
+			</a>
+
+    <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->
+          <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-envelope-o"></i>
+              <span class="label label-success">4</span>
+            </a>
+          </li>
+          <!-- Notifications: style can be found in dropdown.less -->
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">10</span>
+            </a>
+          </li>
+          <!-- Tasks: style can be found in dropdown.less -->
+          <li class="dropdown tasks-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-flag-o"></i>
+              <span class="label label-danger">9</span>
+            </a>
+          </li>
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs">Alexander Pierce</span>
+            </a>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+
+	<!-- menu -->
+	<aside class="main-sidebar">
+		<section class="sidebar" id="mainMenu">
+			<ul class="sidebar-menu">
+        <li class="header">MAIN NAVIGATION</li>
+        <li class="active treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>test page</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a id='hrefTest1' href="#" onClick="makeContent('/test_client', 'hrefTest1')"><i class="fa fa-circle-o"></i> oauth test</a></li>
+            <li class="active"><a id='hrefTest2' href="#" onClick="makeContent('/auth_api1', 'hrefTest2')"><i class="fa fa-circle-o"></i> oauth api</a></li>
+          </ul>
+        </li>
+        </ul>
+		</section>
+	</aside>
+
+	<div class="content-wrapper">
+		<section class="content-header">
+			<ol class="breadcrumb" id="breadcrumb">
+				<!-- <i class="fa fa-dashboard"></i> -->
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content" id="content" layout:fragment="content">
+		</section>
+	</div>
+</div>
+</body>
+</html>
+<script th:src="@{/js/common/menu.js}"></script>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header :: head">
+	<title>oauth2 client</title>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-box-body">
+    <p class="login-box-msg">Sign in to start your session</p>
+
+ 	<form action="authorize" method="post" class="form-horizontal">
+     <input type="hidden" name="client_id" th:value="${param.client_id}"/>
+     <input type="hidden" name="scope" th:value="${param.scope}"/>
+     <input type="hidden" name="response_type" th:value="${param.response_type}"/>
+     <input type="hidden" name="redirect_uri" th:value="${param.redirect_uri}"/>
+     <input type="hidden" name="state" th:value="${param.state}"/>
+     <input type="hidden" name="client_secret" th:value="${param.client_secret}"/>
+
+     <div class="form-group">
+         <label class="col-sm-3 control-label">Username</label>
+
+         <div class="col-sm-9">
+             <input type="text" name="username" value="" required="required" class="form-control" placeholder="Type username"/>
+         </div>
+     </div>
+     <div class="form-group">
+         <label class="col-sm-3 control-label">Password</label>
+
+         <div class="col-sm-9">
+             <input type="password" name="password" required="required" class="form-control" placeholder="Type password"/>
+         </div>
+     </div>
+     <div class="form-group">
+         <div class="col-sm-offset-2 col-sm-10">
+             <input type="submit" value="Login" class="btn btn-primary"/>
+             &nbsp;
+             <span th:if="${oauth_login_error}" style="color:red;">login failure</span>
+         </div>
+     </div>
+ 	</form>
+  </div>
+</div>
+</body>
+</html>

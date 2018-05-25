@@ -1,4 +1,5 @@
 server:
+  servlet.context-path: /authz
   port: 8080
 
 spring:
@@ -24,7 +25,11 @@ spring:
     poolPreparedStatements: true
     maxPoolPreparedStatementPerConnectionSize: 20
     maxOpenPreparedStatements: 20
-
+  thymeleaf:
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+    
 mybatis:
   mapper-locations: classpath*:com/gskwin/authcenter/infrastructure/mapping/*.xml
   type-aliases-package: com.gskwin.authcenter.domain.oauth
@@ -44,6 +49,6 @@ pagehelper:
 logging:
   file: D:\authz.log
 
-logging.level.org.springframework: info
+logging.level.org.springframework: debug
 logging.level.org.mybatis: info
 logging.level.com.gskwin.authcenter.infrastructure: debug
